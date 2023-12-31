@@ -1,0 +1,33 @@
+mixed-port: 7890
+allow-lan: false
+external-controller: 127.0.0.1:49558
+secret: 3f5ab264-6059-49f6-be7d-12a778512ec7
+proxies:
+  - name: "cf-worker"
+    type: vless
+    server: 104.20.25.110
+    port: 80
+    uuid: 3fa46d22-d488-4856-b832-ee1cbe95b14e
+    network: ws
+    udp: false
+    tls: false
+    ws-opts:
+      path: /?ed=2048
+      headers:
+        Host: worker-silent-wind-4c96.liqiang2wahuanhuan.workers.dev
+proxy-groups:
+  - name: taontech
+    type: fallback
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    proxies:
+      - cf-worker
+
+
+rules:
+  - DOMAIN-SUFFIX,taontech.top,DIRECT
+  - DOMAIN-SUFFIX,github.com,taontech
+  - DOMAIN-SUFFIX,fastly.net,taontech
+  - DOMAIN-SUFFIX,bing.com,taontech
+  - GEOIP,CN,DIRECT
+  - MATCH,taontech
